@@ -32,9 +32,9 @@ async function run() {
 
         let unityCmd = '';
         if (process.platform === 'linux') {
-            unityCmd = `sudo xvfb-run --auto-servernum "${unityPath}"`;
+            unityCmd = `xvfb-run --auto-servernum "${unityPath}"`;
         } else if (process.platform === 'darwin') {
-            unityCmd = `sudo "${unityPath}"`;
+            unityCmd = `"${unityPath}"`;
         } else if (process.platform === 'win32') {
             unityCmd = `"${unityPath}"`;
         }
