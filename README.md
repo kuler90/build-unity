@@ -80,7 +80,7 @@ Path to build output.
   with:
     unity-username: ${{ secrets.UNITY_USERNAME }}
     unity-password: ${{ secrets.UNITY_PASSWORD }}
-    unity-serial: ${{ secrets.UNITY_SERIAL }}
+    unity-authenticator-key: ${{ secrets.UNITY_AUTHENTICATOR_KEY }}
 
 - name: Build Unity
   uses: kuler90/build-unity@v1
