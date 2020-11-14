@@ -24,7 +24,7 @@ async function run() {
 
         if (!buildMethod) {
             buildMethod = 'kuler90.BuildCommand.Build';
-            const src = path.join(__dirname, 'BuildCommand.cs')
+            const src = path.join(__dirname, 'BuildCommand.cs');
             const dest = path.join(projectPath, 'Assets/kuler90/Editor');
             await io.mkdirP(dest);
             await io.cp(src, dest);
@@ -33,9 +33,7 @@ async function run() {
         let unityCmd = '';
         if (process.platform === 'linux') {
             unityCmd = `xvfb-run --auto-servernum "${unityPath}"`;
-        } else if (process.platform === 'darwin') {
-            unityCmd = `"${unityPath}"`;
-        } else if (process.platform === 'win32') {
+        } else {
             unityCmd = `"${unityPath}"`;
         }
 
@@ -67,7 +65,7 @@ async function run() {
             buildArgs += ` -androidKeyaliasPass "${androidKeyaliasPass}"`;
         }
 
-        await exec.exec(`${unityCmd} -batchmode -nographics -quit -logFile ${buildArgs}`);
+        await exec.exec(`${unityCmd} -batchmode -nographics -quit -logFile "-" ${buildArgs}`);
 
         core.setOutput('build-path', buildPath);
     } catch (error) {
