@@ -1,8 +1,11 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+using UnityEditor.Callbacks;
 
 namespace kuler90
 {
@@ -78,6 +81,8 @@ namespace kuler90
                 int buildNumber = int.Parse(args["buildNumber"]);
                 PlayerSettings.Android.bundleVersionCode = buildNumber;
                 PlayerSettings.iOS.buildNumber = buildNumber.ToString();
+                PlayerSettings.macOS.buildNumber = buildNumber.ToString();
+                PlayerSettings.tvOS.buildNumber = buildNumber.ToString();
             }
         }
 
@@ -118,6 +123,22 @@ namespace kuler90
                 string value = flagHasValue ? args[next].TrimStart('-') : "";
 
                 result.Add(flag, value);
+            }
+        }
+
+        [PostProcessBuild(45)]
+        // https://github.com/googlesamples/unity-jar-resolver/issues/328
+        static void OnPostProcessPodfile(BuildTarget target, string path)
+        {
+            if (target == BuildTarget.iOS)
+            {
+                string podfilePath = Path.Combine(path, "podfile");
+                if (File.Exists(podfilePath))
+                {
+                    string text = File.ReadAllText(podfilePath);
+                    text = text.Replace("https://github.com/CocoaPods/Specs.git", "https://cdn.cocoapods.org");
+                    File.WriteAllText(podfilePath, text);
+                }
             }
         }
     }
