@@ -1,5 +1,5 @@
 name: Build Unity
-description: Build Unity project
+description: Build Unity project on Ubuntu, macOS or Windows
 inputs:
   unity-path:
     description: Path to Unity executable. UNITY_PATH env will be used if not provided
