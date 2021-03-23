@@ -34,6 +34,10 @@ Set application build number. Only for default build method.
 
 Set scripting define symbols. For example, `RELEASE_VERSION;ENG_VERSION`. Only for default build method.
 
+### `build-options`
+
+List of additional [BuildOptions](https://docs.unity3d.com/ScriptReference/BuildOptions.html). For example, `SymlinkLibraries, CompressWithLz4HC`. Only for default build method.
+
 ### `android-keystore-base64`
 
 The base64 contents of the android keystore file. Only for default build method.

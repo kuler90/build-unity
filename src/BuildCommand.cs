@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
@@ -21,9 +20,10 @@ namespace kuler90
             HandleDefines(args);
             var target = HandleTarget(args);
             var buildPath = HandleBuildPath(args);
+            var buildOptions = HandleBuildOptions(args);
             var scenes = HandleScenesList(args);
 
-            var buildReport = BuildPipeline.BuildPlayer(scenes, buildPath, target, BuildOptions.None);
+            var buildReport = BuildPipeline.BuildPlayer(scenes, buildPath, target, buildOptions);
             int code = (buildReport.summary.result == BuildResult.Succeeded) ? 0 : 1;
 
             ResetDefines();
@@ -70,6 +70,19 @@ namespace kuler90
             return EditorBuildSettings.scenes.Where(scene => scene.enabled).Select(s => s.path).ToArray();
         }
 
+        private static BuildOptions HandleBuildOptions(Dictionary<string, string> args)
+        {
+            var buildOptions = BuildOptions.None;
+            if (args.ContainsKey("buildOptions"))
+            {
+                buildOptions = args["buildOptions"]
+                    .Split(',')
+                    .Select(stringValue => Enum.TryParse<BuildOptions>(stringValue.Trim(), true, out var enumValue) ? enumValue : BuildOptions.None)
+                    .Aggregate((f1, f2) => f1 | f2);
+            }
+            return buildOptions;
+        }
+
         private static void HandleVersion(Dictionary<string, string> args)
         {
             if (args.ContainsKey("buildVersion"))
@@ -90,8 +103,8 @@ namespace kuler90
         {
             if (args.ContainsKey("buildDefines"))
             {
-                string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                string newDefines = defines + ";" + args["buildDefines"];
+                originalDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+                string newDefines = originalDefines + ";" + args["buildDefines"];
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, newDefines);
             }
         }
@@ -101,6 +114,7 @@ namespace kuler90
             if (originalDefines != null)
             {
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, originalDefines);
+                originalDefines = null;
             }
         }
 

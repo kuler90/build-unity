@@ -15,6 +15,7 @@ async function run() {
         const buildVersion = core.getInput('build-version');
         const buildNumber = core.getInput('build-number');
         const buildDefines = core.getInput('build-defines');
+        const buildOptions = core.getInput('build-options');
         const androidKeystoreBase64 = core.getInput('android-keystore-base64');
         const androidKeystorePass = core.getInput('android-keystore-pass');
         const androidKeyaliasName = core.getInput('android-keyalias-name');
@@ -51,6 +52,9 @@ async function run() {
         }
         if (buildDefines) {
             buildArgs += ` -buildDefines "${buildDefines}"`;
+        }
+        if (buildOptions) {
+            buildArgs += ` -buildOptions "${buildOptions}"`;
         }
         if (androidKeystoreBase64) {
             buildArgs += ` -androidKeystoreBase64 "${androidKeystoreBase64}"`;
