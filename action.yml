@@ -45,7 +45,7 @@ outputs:
   build-path:
     description: Path to build output
 runs:
-  using: node12
+  using: node16
   main: src/build.js
 branding:
   icon: package
