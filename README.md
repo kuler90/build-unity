@@ -62,6 +62,10 @@ Path to build method. For example, `MyEditorScript.PerformBuild`. Default build 
 
 Custom arguments for build method.
 
+### `additional-cli-args`
+
+Additional command line arguments to pass to the Unity Editor.
+
 ## Outputs
 
 ### `build-path`

@@ -41,6 +41,9 @@ inputs:
   build-method-args:
     description: Custom arguments for build method
     required: false
+  additional-cli-args:
+    description: Additional command line arguments to pass to the Unity Editor
+    required: false
 outputs:
   build-path:
     description: Path to build output
