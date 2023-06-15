@@ -70,7 +70,7 @@ async function run() {
             buildArgs += ` -androidKeyaliasPass "${androidKeyaliasPass}"`;
         }
         if (additionalCliArgs) {
-            buildArgs += additionalCliArgs;
+            buildArgs += ` ${additionalCliArgs}`;
         }
 
         await exec.exec(`${unityCmd} -batchmode -nographics -quit -logFile "-" ${buildArgs}`);
