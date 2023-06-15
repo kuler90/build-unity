@@ -22,6 +22,7 @@ async function run() {
         const androidKeyaliasPass = core.getInput('android-keyalias-pass');
         let buildMethod = core.getInput('build-method');
         const buildMethodArgs = core.getInput('build-method-args');
+        const additionalCliArgs = core.getInput('additional-cli-args');
 
         if (!buildMethod) {
             buildMethod = 'kuler90.BuildCommand.Build';
@@ -67,6 +68,9 @@ async function run() {
         }
         if (androidKeyaliasPass) {
             buildArgs += ` -androidKeyaliasPass "${androidKeyaliasPass}"`;
+        }
+        if (additionalCliArgs) {
+            buildArgs += additionalCliArgs;
         }
 
         await exec.exec(`${unityCmd} -batchmode -nographics -quit -logFile "-" ${buildArgs}`);
