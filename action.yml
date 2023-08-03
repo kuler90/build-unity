@@ -23,6 +23,9 @@ inputs:
   build-defines:
     description: Set scripting define symbols. For example, RELEASE_VERSION;ENG_VERSION. Only for default build method
     required: false
+  android-keystore-name:
+    description: The keystore name will be used in the build. Only for default build method.
+    required: false
   android-keystore-base64:
     description: The base64 contents of the android keystore file. Only for default build method
     required: false
