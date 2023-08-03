@@ -38,6 +38,10 @@ Set scripting define symbols. For example, `RELEASE_VERSION;ENG_VERSION`. Only f
 
 List of additional [BuildOptions](https://docs.unity3d.com/ScriptReference/BuildOptions.html). For example, `SymlinkLibraries, CompressWithLz4HC`. Only for default build method.
 
+### `android-keystore-name`
+
+The keystore name will be used in the build. Only for default build method.
+
 ### `android-keystore-base64`
 
 The base64 contents of the android keystore file. Only for default build method.
